@@ -27,7 +27,7 @@ import junit.framework.Assert;
 
 public class ClassifyDocument extends ComprehendAgent {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetObject.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClassifyDocument.class);
 
     @Override
     protected void validateParameter() {
@@ -52,8 +52,9 @@ public class ClassifyDocument extends ComprehendAgent {
 
             final JSONObject jsonObject = new JSONObject(jsonAsString);
             messageContext.getContextEntries().put("classifyDocumentResult", jsonObject);
+            
         } catch (JSONException e) {
-            LOGGER.error("", e);
+            LOGGER.error("Error while classifying the document. Detail: ", e);
         }
     }
 }
