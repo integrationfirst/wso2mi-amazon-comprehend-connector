@@ -30,13 +30,14 @@ public class ClassifyDocument extends ComprehendAgent {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassifyDocument.class);
 
     @Override
-    protected void validateParameter() {
+    protected void validateMandatoryParameter() {
         Assert.assertNotNull("The EndpointArn can't null", getParameterAsString("endpointArn"));
         Assert.assertNotNull("The Text can't null", getParameterAsString("text"));
     }
 
     @Override
     protected void execute(MessageContext messageContext) throws ConnectException {
+        final long start = System.currentTimeMillis();
         final String endpointArn = getParameterAsString("endpointArn");
         final String text = getParameterAsString("text");
 
@@ -53,6 +54,7 @@ public class ClassifyDocument extends ComprehendAgent {
             final JSONObject jsonObject = new JSONObject(jsonAsString);
             messageContext.getContextEntries().put("classifyDocumentResult", jsonObject);
             
+            LOGGER.debug("Classify the document. Took {} ms", System.currentTimeMillis() - start);
         } catch (JSONException e) {
             LOGGER.error("Error while classifying the document. Detail: ", e);
         }
