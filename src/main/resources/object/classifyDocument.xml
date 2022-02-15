@@ -15,14 +15,10 @@
    specific language governing permissions and limitations
    under the License.
 -->
-<template xmlns="http://ws.apache.org/ns/synapse" name="classifyObject">
-    <parameter name="address"/>
-    <parameter name="bucket"/>
-    <parameter name="filename"/>
-    <parameter name="accessKey"/>
-    <parameter name="secretKey"/>
-    <parameter name="fileContent"/>
-    <parameter name="filePath"/>
+<template xmlns="http://ws.apache.org/ns/synapse" name="classifyDocument">
+    <parameter name="awsAccessKeyId"/>
+    <parameter name="awsSecretAccessKey"/>
+    <parameter name="region"/>
     <sequence>
         <class name="vn.wso2.connector.ClassifyDocument"/>
     </sequence>

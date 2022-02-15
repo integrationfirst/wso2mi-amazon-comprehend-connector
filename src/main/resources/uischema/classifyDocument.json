@@ -1,27 +1,62 @@
 {
-	"connectorName": "aws-comprehend",
+	"connectorName": "comprehend",
 	"operationName": "classifyDocument",
 	"title": "Classify a Document",
 	"help": "",
 	"elements": [
 		{
-			"type": "attributeGroup",
+			"type": "attribute",
 			"value": {
-				"groupName": "General",
-				"elements": [
-					{
-						"type": "attribute",
-						"value": {
-							"name": "configRef",
-							"displayName": "Connection",
-							"inputType": "connection",
-							"defaultType": "connection.amazons3",
-							"defaultValue": "",
-							"required": "true",
-							"helpTip": "Connection to be used"
-						}
-					}
-				]
+				"name": "awsAccessKeyId",
+				"displayName": "AWS Access Key Id",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "The AWS Access Key Id."
+			}
+		},
+		{
+			"type": "attribute",
+			"value": {
+				"name": "awsSecretAccessKey",
+				"displayName": "AWS Secret Access Key",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "The AWS Secret Access Key."
+			}
+		},
+		{
+			"type": "attribute",
+			"value": {
+				"name": "region",
+				"displayName": "Region",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "Region which is used select a endpoint request to make a request"
+			}
+		},
+		{
+			"type": "attribute",
+			"value": {
+				"name": "text",
+				"displayName": "Text",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "The raw text"
+			}
+		},
+		{
+			"type": "attribute",
+			"value": {
+				"name": "endpointArn",
+				"displayName": "EndpointArn",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "The document text to be analyzed."
 			}
 		}
 	]
