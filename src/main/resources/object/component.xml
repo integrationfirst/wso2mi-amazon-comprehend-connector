@@ -18,14 +18,9 @@
 -->
 <component name="object" type="synapse/template">
     <subComponents>
-        <component name="putObject">
-            <file>putObject.xml</file>
-            <description>Method to put a particular object to minio</description>
-        </component>
-        
-        <component name="getObject">
-            <file>getObject.xml</file>
-            <description>Method to get a particular object from minio</description>
+        <component name="classifyDocument">
+            <file>classifyDocument.xml</file>
+            <description>Creates a new document classification request to analyze a single document in real-time</description>
         </component>
     </subComponents>
 </component>

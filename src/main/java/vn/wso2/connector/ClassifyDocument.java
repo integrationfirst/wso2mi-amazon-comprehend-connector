@@ -38,6 +38,7 @@ public class ClassifyDocument extends ComprehendAgent {
     @Override
     protected void execute(MessageContext messageContext) throws ConnectException {
         final long start = System.currentTimeMillis();
+        
         final String endpointArn = getParameterAsString("endpointArn");
         final String text = getParameterAsString("text");
 

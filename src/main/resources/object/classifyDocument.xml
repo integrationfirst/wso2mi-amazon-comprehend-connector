@@ -15,7 +15,7 @@
    specific language governing permissions and limitations
    under the License.
 -->
-<template xmlns="http://ws.apache.org/ns/synapse" name="getObject">
+<template xmlns="http://ws.apache.org/ns/synapse" name="classifyObject">
     <parameter name="address"/>
     <parameter name="bucket"/>
     <parameter name="filename"/>
@@ -24,6 +24,6 @@
     <parameter name="fileContent"/>
     <parameter name="filePath"/>
     <sequence>
-        <class name="vn.ds.study.GetObject"/>
+        <class name="vn.wso2.connector.ClassifyDocument"/>
     </sequence>
 </template>
