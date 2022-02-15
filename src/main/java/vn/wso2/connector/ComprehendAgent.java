@@ -16,11 +16,11 @@ public abstract class ComprehendAgent extends AbstractConnector {
     private MessageContext context;
 
     private AmazonComprehend comprehendClient;
-
+    
     @Override
     public final void connect(final MessageContext messageContext) throws ConnectException {
         this.context = messageContext;
-        this.validateParameter();
+        this.validateMandatoryParameter();
         this.comprehendClient = createComprehendClient();
         execute(messageContext);
     }
@@ -34,7 +34,7 @@ public abstract class ComprehendAgent extends AbstractConnector {
         return getParameter(parameterName, String.class);
     }
 
-    protected abstract void validateParameter();
+    protected abstract void validateMandatoryParameter();
 
     protected abstract void execute(final MessageContext messageContext) throws ConnectException;
 
