@@ -144,6 +144,11 @@
 			<type>aar</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.9</version>
+		</dependency>
 		<!--Dependency for Integration Tests -->
 		<dependency>
 			<groupId>org.wso2.carbon.automation</groupId>
@@ -192,11 +197,7 @@
 			<version>${integration.base.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.9</version>
-		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -213,7 +214,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
+				<executions>	
 					<execution>
 						<id>create-archive</id>
 						<phase>package</phase>
@@ -306,9 +307,9 @@
 									<outputDirectory>target/connector/dependencies</outputDirectory>
 								</artifactItem>
 								<artifactItem>
-									<groupId>io.minio</groupId>
-									<artifactId>minio</artifactId>
-									<version>${minio.version}</version>
+									<groupId>com.amazonaws</groupId>
+									<artifactId>aws-java-sdk</artifactId>
+									<version>${aws-java-sdk.version}</version>
 									<type>jar</type>
 									<overWrite>true</overWrite>
 									<outputDirectory>target/connector/dependencies</outputDirectory>
