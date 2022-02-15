@@ -79,7 +79,7 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
 
             LOGGER.debug("Start the document classification job. Took {} ms", System.currentTimeMillis() - start);
         } catch (Exception e) {
-            LOGGER.error("Error while classifying the document. Detail: ", e);
+            LOGGER.error("Error while starting the document. Detail: ", e);
         }
     }
 

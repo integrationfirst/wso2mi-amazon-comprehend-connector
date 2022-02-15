@@ -16,12 +16,16 @@ public abstract class ComprehendAgent extends AbstractConnector {
     private MessageContext context;
 
     private AmazonComprehend comprehendClient;
-    
+
+    public ComprehendAgent() {
+        super();
+        this.comprehendClient = createComprehendClient();
+    }
+
     @Override
     public final void connect(final MessageContext messageContext) throws ConnectException {
         this.context = messageContext;
         this.validateMandatoryParameter();
-        this.comprehendClient = createComprehendClient();
         execute(messageContext);
     }
 
@@ -53,8 +57,8 @@ public abstract class ComprehendAgent extends AbstractConnector {
             new AWSStaticCredentialsProvider(awsCreds)).withRegion(region).build();
     }
 
-    public AmazonComprehend getComprehendClient() {
+    protected AmazonComprehend getComprehendClient() {
         return comprehendClient;
     }
-    
+
 }
