@@ -15,13 +15,13 @@
    specific language governing permissions and limitations
    under the License.
 -->
-<template xmlns="http://ws.apache.org/ns/synapse" name="classifyDocument">
+<template xmlns="http://ws.apache.org/ns/synapse" name="startDocumentClassificationJob">
     <parameter name="awsAccessKeyId"/>
     <parameter name="awsSecretAccessKey"/>
     <parameter name="region"/>
     <parameter name="text"/>
     <parameter name="endpointArn"/>
     <sequence>
-        <class name="vn.wso2.connector.ClassifyDocument"/>
+        <class name="vn.wso2.connector.StartDocumentClassificationJob"/>
     </sequence>
 </template>

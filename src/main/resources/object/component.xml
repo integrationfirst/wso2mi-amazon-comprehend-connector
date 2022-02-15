@@ -23,4 +23,16 @@
             <description>Creates a new document classification request to analyze a single document in real-time</description>
         </component>
     </subComponents>
+        <subComponents>
+        <component name="startDocumentClassificationJob">
+            <file>startDocumentClassificationJob.xml</file>
+            <description>Starts an asynchronous document classification job. Use the DescribeDocumentClassificationJob operation to track the progress of the job.</description>
+        </component>
+    </subComponents>
+        <subComponents>
+        <component name="describeDocumentClassificationJob">
+            <file>describeDocumentClassificationJob.xml</file>
+            <description>Gets the properties associated with a document classification job. Use this operation to get the status of a classification job.</description>
+        </component>
+    </subComponents>
 </component>
