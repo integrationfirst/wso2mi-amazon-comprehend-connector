@@ -19,8 +19,7 @@
     <parameter name="awsAccessKeyId"/>
     <parameter name="awsSecretAccessKey"/>
     <parameter name="region"/>
-    <parameter name="text"/>
-    <parameter name="endpointArn"/>
+    <parameter name="jobId"/>
     <sequence>
         <class name="vn.wso2.connector.DescribeDocumentClassificationJob"/>
     </sequence>
