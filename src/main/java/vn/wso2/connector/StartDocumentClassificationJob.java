@@ -13,7 +13,6 @@
 package vn.wso2.connector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.synapse.MessageContext;
@@ -92,7 +91,6 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         final String documentReadMode = getParameterAsString("documentReadMode");
         final String featureTypesAsString = getParameterAsString("featureTypes");
         final String tagsAsString = getParameterAsString("tags");
-        LOGGER.info(tagsAsString);
         final String inputFormat = getParameterAsString("inputFormat");
         final String kmsKeyId = getParameterAsString("kmsKeyId");
         final String volumeKmsKeyId = getParameterAsString("volumeKmsKeyId");
