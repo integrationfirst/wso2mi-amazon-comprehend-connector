@@ -1,6 +1,8 @@
 package vn.wso2.connector;
 
 import org.apache.synapse.MessageContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.connector.core.AbstractConnector;
 import org.wso2.carbon.connector.core.ConnectException;
 
@@ -13,18 +15,16 @@ import junit.framework.Assert;
 
 public abstract class ComprehendAgent extends AbstractConnector {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComprehendAgent.class);
+
     private MessageContext context;
 
     private AmazonComprehend comprehendClient;
 
-    public ComprehendAgent() {
-        super();
-        this.comprehendClient = createComprehendClient();
-    }
-
     @Override
     public final void connect(final MessageContext messageContext) throws ConnectException {
         this.context = messageContext;
+        this.comprehendClient = getComprehendClientInstance();
         this.validateMandatoryParameter();
         execute(messageContext);
     }
@@ -53,12 +53,22 @@ public abstract class ComprehendAgent extends AbstractConnector {
 
         final BasicAWSCredentials awsCreds = new BasicAWSCredentials(awsAccessKeyId, awsSecretAccessKey);
 
-        return AmazonComprehendClientBuilder.standard().withCredentials(
+        final AmazonComprehend amazonComprehend = AmazonComprehendClientBuilder.standard().withCredentials(
             new AWSStaticCredentialsProvider(awsCreds)).withRegion(region).build();
+
+        LOGGER.info("Create the comprehend client, {}", amazonComprehend);
+
+        return amazonComprehend;
+    }
+    
+    private AmazonComprehend getComprehendClientInstance() {
+        if(this.comprehendClient != null) {
+            return this.comprehendClient;
+        }
+        return createComprehendClient();
     }
 
     protected AmazonComprehend getComprehendClient() {
         return comprehendClient;
     }
-
 }
