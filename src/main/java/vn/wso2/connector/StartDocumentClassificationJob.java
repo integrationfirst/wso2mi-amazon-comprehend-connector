@@ -12,6 +12,8 @@
  */
 package vn.wso2.connector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.synapse.MessageContext;
@@ -25,10 +27,12 @@ import com.amazonaws.services.comprehend.model.InputDataConfig;
 import com.amazonaws.services.comprehend.model.OutputDataConfig;
 import com.amazonaws.services.comprehend.model.StartDocumentClassificationJobRequest;
 import com.amazonaws.services.comprehend.model.StartDocumentClassificationJobResult;
+import com.amazonaws.services.comprehend.model.Tag;
 import com.amazonaws.services.comprehend.model.VpcConfig;
 import com.amazonaws.util.CollectionUtils;
 import com.amazonaws.util.StringUtils;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import junit.framework.Assert;
 
@@ -48,25 +52,25 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
     @Override
     protected void execute(MessageContext messageContext) throws ConnectException {
         final long start = System.currentTimeMillis();
-
         final String dataAccessRoleArn = getParameterAsString("dataAccessRoleArn");
         final String documentClassifierArn = getParameterAsString("documentClassifierArn");
         final String jobName = getParameterAsString("jobName");
-
-        final InputDataConfig inputDataConfig = this.createInputDataConfig();
-
-        final OutputDataConfig outputDataConfig = this.createOutputDataConfig();
-
-        final StartDocumentClassificationJobRequest classificationJobRequest = new StartDocumentClassificationJobRequest();
-
-        classificationJobRequest.setJobName(jobName);
-        classificationJobRequest.setDocumentClassifierArn(documentClassifierArn);
-        classificationJobRequest.setDataAccessRoleArn(dataAccessRoleArn);
-        classificationJobRequest.setInputDataConfig(inputDataConfig);
-        classificationJobRequest.setOutputDataConfig(outputDataConfig);
-
-        this.setOptionalProperties(classificationJobRequest);
         try {
+
+            final InputDataConfig inputDataConfig = this.createInputDataConfig();
+
+            final OutputDataConfig outputDataConfig = this.createOutputDataConfig();
+
+            final StartDocumentClassificationJobRequest classificationJobRequest = new StartDocumentClassificationJobRequest();
+
+            classificationJobRequest.setJobName(jobName);
+            classificationJobRequest.setDocumentClassifierArn(documentClassifierArn);
+            classificationJobRequest.setDataAccessRoleArn(dataAccessRoleArn);
+            classificationJobRequest.setInputDataConfig(inputDataConfig);
+            classificationJobRequest.setOutputDataConfig(outputDataConfig);
+
+            this.setOptionalProperties(classificationJobRequest);
+
             final StartDocumentClassificationJobResult classificationJobResult = getComprehendClient().startDocumentClassificationJob(
                 classificationJobRequest);
 
@@ -86,7 +90,9 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         final String clientRequestToken = getParameterAsString("clientRequestToken");
         final String documentReadAction = getParameterAsString("documentReadAction");
         final String documentReadMode = getParameterAsString("documentReadMode");
-        final List<String> featureTypes = getParameter("featureTypes", List.class);
+        final String featureTypesAsString = getParameterAsString("featureTypes");
+        final String tagsAsString = getParameterAsString("tags");
+        LOGGER.info(tagsAsString);
         final String inputFormat = getParameterAsString("inputFormat");
         final String kmsKeyId = getParameterAsString("kmsKeyId");
         final String volumeKmsKeyId = getParameterAsString("volumeKmsKeyId");
@@ -99,13 +105,17 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         if (StringUtils.hasValue(inputFormat)) {
             classificationJobRequest.getInputDataConfig().setInputFormat(inputFormat);
         }
-        if(StringUtils.hasValue(kmsKeyId)) {
+        if (StringUtils.hasValue(kmsKeyId)) {
             classificationJobRequest.getOutputDataConfig().setKmsKeyId(kmsKeyId);
         }
-        if(StringUtils.hasValue(volumeKmsKeyId)) {
+        if (StringUtils.hasValue(volumeKmsKeyId)) {
             classificationJobRequest.setVolumeKmsKeyId(volumeKmsKeyId);
         }
-        setDocumentReaderConfig(classificationJobRequest, documentReadAction, documentReadMode, featureTypes);
+        setDocumentReaderConfig(classificationJobRequest, documentReadAction, documentReadMode, featureTypesAsString);
+        if (StringUtils.hasValue(tagsAsString)) {
+            List<Tag> tags = new GsonBuilder().create().fromJson(tagsAsString, ArrayList.class);
+            classificationJobRequest.setTags(tags);
+        }
         setVpcConfig(classificationJobRequest, securityGroupIds, subnets);
     }
 
@@ -114,37 +124,38 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         final List<String> securityGroupIds,
         final List<String> subnets) {
         final VpcConfig vpcConfig = new VpcConfig();
-        
-        if(!CollectionUtils.isNullOrEmpty(securityGroupIds)) {
+
+        if (!CollectionUtils.isNullOrEmpty(securityGroupIds)) {
             vpcConfig.setSecurityGroupIds(securityGroupIds);
         }
-        if(!CollectionUtils.isNullOrEmpty(subnets)) {
+        if (!CollectionUtils.isNullOrEmpty(subnets)) {
             vpcConfig.setSubnets(subnets);
         }
-        if(!CollectionUtils.isNullOrEmpty(securityGroupIds) || !CollectionUtils.isNullOrEmpty(subnets)) {
+        if (!CollectionUtils.isNullOrEmpty(securityGroupIds) || !CollectionUtils.isNullOrEmpty(subnets)) {
             classificationJobRequest.setVpcConfig(vpcConfig);
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void setDocumentReaderConfig(
         final StartDocumentClassificationJobRequest classificationJobRequest,
         final String documentReadAction,
         final String documentReadMode,
-        final List<String> featureTypes) {
+        final String featureTypesAsString) {
 
         final DocumentReaderConfig documentReaderConfig = new DocumentReaderConfig();
         if (StringUtils.hasValue(documentReadAction)) {
             documentReaderConfig.setDocumentReadAction(documentReadAction);
         }
-
         if (StringUtils.hasValue(documentReadMode)) {
             documentReaderConfig.setDocumentReadMode(documentReadMode);
         }
-
-        if (!CollectionUtils.isNullOrEmpty(featureTypes)) {
+        
+        List<String> featureTypes = null;
+        if (StringUtils.hasValue(featureTypesAsString)) {
+            featureTypes = new GsonBuilder().create().fromJson(featureTypesAsString, ArrayList.class);
             documentReaderConfig.setFeatureTypes(featureTypes);
         }
-
         if (StringUtils.hasValue(documentReadAction) || StringUtils.hasValue(documentReadMode)
                 || !CollectionUtils.isNullOrEmpty(featureTypes)) {
             classificationJobRequest.getInputDataConfig().setDocumentReaderConfig(documentReaderConfig);
