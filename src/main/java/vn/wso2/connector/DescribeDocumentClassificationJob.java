@@ -22,13 +22,15 @@ import com.amazonaws.services.comprehend.model.DescribeDocumentClassificationJob
 import com.amazonaws.services.comprehend.model.DescribeDocumentClassificationJobResult;
 import com.google.gson.Gson;
 
+import junit.framework.Assert;
+
 public class DescribeDocumentClassificationJob extends ComprehendAgent {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DescribeDocumentClassificationJob.class);
 
     @Override
     protected void validateMandatoryParameter() {
-        
+        Assert.assertNotNull("The jobId can't null", getParameterAsString("jobId"));
     }
 
     @Override
