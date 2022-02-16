@@ -13,7 +13,6 @@
 package vn.wso2.connector;
 
 import org.apache.synapse.MessageContext;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,6 @@ public class ClassifyDocument extends ComprehendAgent {
         final ClassifyDocumentRequest classifyDocumentRequest = new ClassifyDocumentRequest();
         classifyDocumentRequest.setText(text);
         classifyDocumentRequest.setEndpointArn(endpointArn);
-
         try {
             final ClassifyDocumentResult classifyDocumentResult = this.getComprehendClient().classifyDocument(
                 classifyDocumentRequest);
@@ -55,8 +53,8 @@ public class ClassifyDocument extends ComprehendAgent {
             final JSONObject jsonObject = new JSONObject(jsonAsString);
             messageContext.getContextEntries().put("classifyDocumentResult", jsonObject);
             
-            LOGGER.debug("Classify the document. Took {} ms", System.currentTimeMillis() - start);
-        } catch (JSONException e) {
+            LOGGER.info("Classify the document. Took {} ms", System.currentTimeMillis() - start);
+        } catch (Exception e) {
             LOGGER.error("Error while classifying the document. Detail: ", e);
         }
     }
