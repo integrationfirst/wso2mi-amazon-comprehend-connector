@@ -19,8 +19,21 @@
     <parameter name="awsAccessKeyId"/>
     <parameter name="awsSecretAccessKey"/>
     <parameter name="region"/>
-    <parameter name="text"/>
-    <parameter name="endpointArn"/>
+    <parameter name="clientRequestToken"/>
+    <parameter name="dataAccessRoleArn"/>
+    <parameter name="documentClassifierArn"/>
+    <parameter name="documentReadAction"/>
+    <parameter name="documentReadMode"/>
+    <parameter name="featureTypes"/>
+    <parameter name="inputFormat"/>
+    <parameter name="inputS3Uri"/>
+    <parameter name="jobName"/>
+    <parameter name="kmsKeyId"/>
+    <parameter name="outputS3Uri"/>
+    <parameter name="tags"/>
+    <parameter name="volumeKmsKeyId"/>
+    <parameter name="securityGroupIds"/>
+    <parameter name="subnets"/>
     <sequence>
         <class name="vn.wso2.connector.StartDocumentClassificationJob"/>
     </sequence>
