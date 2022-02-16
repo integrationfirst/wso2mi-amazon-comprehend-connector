@@ -29,6 +29,17 @@
 		{
 			"type": "attribute",
 			"value": {
+				"name": "region",
+				"displayName": "Region",
+				"inputType": "stringOrExpression",
+				"defaultValue": "",
+				"required": "true",
+				"helpTip": "Region which is used select a endpoint request to make a request"
+			}
+		},
+		{
+			"type": "attribute",
+			"value": {
 				"name": "clientRequestToken",
 				"displayName": "Client Request Token",
 				"inputType": "stringOrExpression",
