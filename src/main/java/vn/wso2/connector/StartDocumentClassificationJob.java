@@ -44,20 +44,14 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         final String documentReadMode = getParameterAsString("documentReadMode");
         //        final String featureTypes = getParameterAsString("featureTypes");
         final String inputFormat = getParameterAsString("inputFormat");
-        final String inputS3Uri = getParameterAsString("inputS3Uri");
         final String jobName = getParameterAsString("jobName");
-        final String kmsKeyId = getParameterAsString("kmsKeyId");
-        final String outputS3Uri = getParameterAsString("outputS3Uri");
         final String volumeKmsKeyId = getParameterAsString("volumeKmsKeyId");
         //        final String securityGroupIds = getParameterAsString("securityGroupIds");
         //        final String subnets = getParameterAsString("subnets");
 
-        final InputDataConfig inputDataConfig = new InputDataConfig();
-        inputDataConfig.setS3Uri(inputS3Uri);
+        final InputDataConfig inputDataConfig = this.createInputDataConfig();
 
-        final OutputDataConfig outputDataConfig = new OutputDataConfig();
-        outputDataConfig.setS3Uri(outputS3Uri);
-        outputDataConfig.setKmsKeyId(kmsKeyId);
+        final OutputDataConfig outputDataConfig = this.createOutputDataConfig();
 
         final StartDocumentClassificationJobRequest classificationJobRequest = new StartDocumentClassificationJobRequest();
 
@@ -67,7 +61,6 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         classificationJobRequest.setInputDataConfig(inputDataConfig);
         classificationJobRequest.setOutputDataConfig(outputDataConfig);
         classificationJobRequest.setVolumeKmsKeyId(volumeKmsKeyId);
-
         try {
             final StartDocumentClassificationJobResult classificationJobResult = getComprehendClient().startDocumentClassificationJob(
                 classificationJobRequest);
@@ -82,5 +75,27 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
             LOGGER.error("Error while starting the document. Detail: ", e);
         }
     }
+
+    private InputDataConfig createInputDataConfig() {
+        final String inputS3Uri = getParameterAsString("inputS3Uri");
+        
+        final InputDataConfig inputDataConfig = new InputDataConfig();
+        inputDataConfig.setS3Uri(inputS3Uri);
+        
+        return inputDataConfig;
+    }
+
+    private OutputDataConfig createOutputDataConfig() {
+        final String kmsKeyId = getParameterAsString("kmsKeyId");
+        final String outputS3Uri = getParameterAsString("outputS3Uri");
+        
+        final OutputDataConfig outputDataConfig = new OutputDataConfig();
+        outputDataConfig.setS3Uri(outputS3Uri);
+        outputDataConfig.setKmsKeyId(kmsKeyId);
+        
+        return outputDataConfig;
+    }
+    
+    
 
 }

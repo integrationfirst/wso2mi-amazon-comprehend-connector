@@ -1,7 +1,7 @@
 {
 	"connectorName": "comprehend",
-	"operationName": "classifyDocument",
-	"title": "Classify a Document",
+	"operationName": "startDocumentClassificationJob",
+	"title": "Start document classification job",
 	"help": "",
 	"elements": [
 		{
