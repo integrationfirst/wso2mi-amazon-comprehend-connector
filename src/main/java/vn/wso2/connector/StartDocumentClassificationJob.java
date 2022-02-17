@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.synapse.MessageContext;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.connector.core.ConnectException;
@@ -32,6 +31,7 @@ import com.amazonaws.util.CollectionUtils;
 import com.amazonaws.util.StringUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 
 import junit.framework.Assert;
 
@@ -69,14 +69,12 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
             classificationJobRequest.setOutputDataConfig(outputDataConfig);
 
             this.setOptionalProperties(classificationJobRequest);
-
+            
             final StartDocumentClassificationJobResult classificationJobResult = getComprehendClient().startDocumentClassificationJob(
                 classificationJobRequest);
 
-            final String jsonAsString = new Gson().toJson(classificationJobResult);
-
-            final JSONObject jsonObject = new JSONObject(jsonAsString);
-            messageContext.getContextEntries().put("classificationJobResult", jsonObject);
+            final JsonElement jsonElement = new Gson().toJsonTree(classificationJobResult);
+            messageContext.setProperty("payload", jsonElement);
 
             LOGGER.debug("Start the document classification job. Took {} ms", System.currentTimeMillis() - start);
         } catch (Exception e) {
