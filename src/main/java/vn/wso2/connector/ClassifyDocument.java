@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import junit.framework.Assert;
 
 public class ClassifyDocument extends ComprehendAgent {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassifyDocument.class);
 
     @Override
@@ -37,7 +37,7 @@ public class ClassifyDocument extends ComprehendAgent {
     @Override
     protected void execute(MessageContext messageContext) throws ConnectException {
         final long start = System.currentTimeMillis();
-        
+
         final String endpointArn = getParameterAsString("endpointArn");
         final String text = getParameterAsString("text");
 
@@ -51,9 +51,10 @@ public class ClassifyDocument extends ComprehendAgent {
             final String jsonAsString = new Gson().toJson(classifyDocumentResult);
 
             final JSONObject jsonObject = new JSONObject(jsonAsString);
-            messageContext.getContextEntries().put("classifyDocumentResult", jsonObject);
-            
-            LOGGER.info("Classify the document. Took {} ms", System.currentTimeMillis() - start);
+            messageContext.setProperty("classifyDocumentResult", jsonObject);
+
+            LOGGER.info("Classify the document and put the response to classifyDocumentResult property. Took {} ms",
+                System.currentTimeMillis() - start);
         } catch (Exception e) {
             LOGGER.error("Error while classifying the document. Detail: ", e);
         }

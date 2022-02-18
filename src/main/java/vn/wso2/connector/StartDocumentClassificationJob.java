@@ -69,14 +69,18 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
             classificationJobRequest.setOutputDataConfig(outputDataConfig);
 
             this.setOptionalProperties(classificationJobRequest);
-            
+
+            LOGGER.info("Prepared classification job request.");
+
             final StartDocumentClassificationJobResult classificationJobResult = getComprehendClient().startDocumentClassificationJob(
                 classificationJobRequest);
 
             final JsonElement jsonElement = new Gson().toJsonTree(classificationJobResult);
-            messageContext.setProperty("payload", jsonElement);
+            messageContext.setProperty("classificationJobResult", jsonElement);
 
-            LOGGER.debug("Start the document classification job. Took {} ms", System.currentTimeMillis() - start);
+            LOGGER.info(
+                "Start the document classification job and put the response to classificationJobResult property. Took {} ms",
+                System.currentTimeMillis() - start);
         } catch (Exception e) {
             LOGGER.error("Error while starting the document. Detail: ", e);
         }
@@ -146,7 +150,7 @@ public class StartDocumentClassificationJob extends ComprehendAgent {
         if (StringUtils.hasValue(documentReadMode)) {
             documentReaderConfig.setDocumentReadMode(documentReadMode);
         }
-        
+
         List<String> featureTypes = null;
         if (StringUtils.hasValue(featureTypesAsString)) {
             featureTypes = new GsonBuilder().create().fromJson(featureTypesAsString, ArrayList.class);

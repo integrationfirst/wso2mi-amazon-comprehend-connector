@@ -48,9 +48,11 @@ public class DescribeDocumentClassificationJob extends ComprehendAgent {
             final String jsonAsString = new Gson().toJson(describeDocumentClassificationJobResult);
 
             final JSONObject jsonObject = new JSONObject(jsonAsString);
-            messageContext.getContextEntries().put("classificationJobResult", jsonObject);
+            messageContext.setProperty("classificationJobResult", jsonObject);
 
-            LOGGER.debug("Describe the document classification job. Took {} ms", System.currentTimeMillis() - start);
+            LOGGER.debug(
+                "Describe the document classification job and put the response to classificationJobResult property. Took {} ms",
+                System.currentTimeMillis() - start);
         } catch (Exception e) {
             LOGGER.error("Error while describing the document. Detail: ", e);
         }
