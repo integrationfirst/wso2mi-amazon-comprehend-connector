@@ -41,6 +41,7 @@ public class DescribeDocumentClassificationJob extends ComprehendAgent {
 
         final DescribeDocumentClassificationJobRequest describeDocumentClassificationJobRequest = new DescribeDocumentClassificationJobRequest();
         describeDocumentClassificationJobRequest.setJobId(jobId);
+        LOGGER.info("Prepared describe classification job request.");
         try {
             final DescribeDocumentClassificationJobResult describeDocumentClassificationJobResult = getComprehendClient().describeDocumentClassificationJob(
                 describeDocumentClassificationJobRequest);
@@ -50,7 +51,7 @@ public class DescribeDocumentClassificationJob extends ComprehendAgent {
             final JSONObject jsonObject = new JSONObject(jsonAsString);
             messageContext.setProperty("classificationJobResult", jsonObject);
 
-            LOGGER.debug(
+            LOGGER.info(
                 "Describe the document classification job and put the response to classificationJobResult property. Took {} ms",
                 System.currentTimeMillis() - start);
         } catch (Exception e) {
