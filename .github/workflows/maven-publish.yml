@@ -41,7 +41,7 @@ jobs:
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.SPSVNHUB_TOKEN }}
 
     - name: Release
       uses: actions/create-release@v1
@@ -53,12 +53,12 @@ jobs:
         tag_name: ${{ github.ref }}
         body_path: CHANGELOG.md
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.SPSVNHUB_TOKEN }}
 
     - name: Upload artifact
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.SPSVNHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./target/comprehend-connector-${{ steps.project_version.outputs.version }}.zip
