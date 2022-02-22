@@ -55,7 +55,7 @@ public class DescribeDocumentClassificationJob extends ComprehendAgent {
                 "Describe the document classification job and put the response to classificationJobResult property. Took {} ms",
                 System.currentTimeMillis() - start);
         } catch (Exception e) {
-            LOGGER.error("Error while describing the document. Detail: ", e);
+            throw new ConnectException(e, "Error while describing the document. Detail: ");
         }
     }
 
