@@ -56,7 +56,7 @@ public class ClassifyDocument extends ComprehendAgent {
             LOGGER.info("Classify the document and put the response to classifyDocumentResult property. Took {} ms",
                 System.currentTimeMillis() - start);
         } catch (Exception e) {
-            LOGGER.error("Error while classifying the document. Detail: ", e);
+            throw new ConnectException(e, "Error while classifying the document. Detail: ");
         }
     }
 }
