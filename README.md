@@ -8,6 +8,9 @@ The Comprehend Connnector allows you connect to the Amazon Comprehend API throug
 + DescribeDocumentClassificationJob
 
 ## Compability
+| Release  | Amazon Comprehend SDK version |
+| ------------- | ------------- |
+| 1.0.5  | 1.12.153  |
 
 ## Getting started
 1. Clone or download the [source code](https://github.com/spsvnhub/wso2mi-amazon-comprehend-connector) 
