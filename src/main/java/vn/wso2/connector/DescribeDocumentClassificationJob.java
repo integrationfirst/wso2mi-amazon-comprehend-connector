@@ -13,7 +13,6 @@
 package vn.wso2.connector;
 
 import org.apache.synapse.MessageContext;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.connector.core.ConnectException;
@@ -21,6 +20,7 @@ import org.wso2.carbon.connector.core.ConnectException;
 import com.amazonaws.services.comprehend.model.DescribeDocumentClassificationJobRequest;
 import com.amazonaws.services.comprehend.model.DescribeDocumentClassificationJobResult;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 
 import junit.framework.Assert;
 
@@ -46,15 +46,14 @@ public class DescribeDocumentClassificationJob extends ComprehendAgent {
             final DescribeDocumentClassificationJobResult describeDocumentClassificationJobResult = getComprehendClient().describeDocumentClassificationJob(
                 describeDocumentClassificationJobRequest);
 
-            final String jsonAsString = new Gson().toJson(describeDocumentClassificationJobResult);
-
-            final JSONObject jsonObject = new JSONObject(jsonAsString);
-            messageContext.setProperty("classificationJobResult", jsonObject);
+            final JsonElement jsonElement = new Gson().toJsonTree(describeDocumentClassificationJobResult);
+            messageContext.setProperty("classificationJobResult", jsonElement);
 
             LOGGER.info(
                 "Describe the document classification job and put the response to classificationJobResult property. Took {} ms",
                 System.currentTimeMillis() - start);
         } catch (Exception e) {
+            LOGGER.error("", e);
             throw new ConnectException(e, "Error while describing the document. Detail: ");
         }
     }
