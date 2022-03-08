@@ -475,7 +475,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub Packages</name>
-			<url>https://maven.pkg.github.com/spsvnhub/wso2mi-amazon-comprehend-connector</url>
+			<url>https://maven.pkg.github.com/integrationfirst/wso2mi-amazon-comprehend-connector</url>
 		</repository>
 	</distributionManagement>
 </project>
